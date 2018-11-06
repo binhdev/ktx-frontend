@@ -3,39 +3,45 @@
       <div class="sidebar-wrapper">
             <div class="logo">
                 <a href="http://www.creative-tim.com" class="simple-text">
-                    Creative Tim
+                    Quan ly ky tuc xa
                 </a>
             </div>
 
             <ul class="nav">
                 <li class="active">
-                    <a href="dashboard.html">
+                    <a href="/">
                         <i class="pe-7s-graph"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
                 <li>
-                    <a href="user.html">
+                    <a href="quanly">
                         <i class="pe-7s-user"></i>
-                        <p>User Profile</p>
+                        <p>Quan ly</p>
                     </a>
                 </li>
                 <li>
-                    <a href="table.html">
+                    <a href="khach">
+                        <i class="pe-7s-user"></i>
+                        <p>Khach</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="phong">
                         <i class="pe-7s-note2"></i>
-                        <p>Table List</p>
+                        <p>Phong</p>
                     </a>
                 </li>
                 <li>
-                    <a href="typography.html">
+                    <a href="typography">
                         <i class="pe-7s-news-paper"></i>
-                        <p>Typography</p>
+                        <p>Tai san</p>
                     </a>
                 </li>
                 <li>
                     <a href="icons.html">
                         <i class="pe-7s-science"></i>
-                        <p>Icons</p>
+                        <p>Dien nuoc</p>
                     </a>
                 </li>
                 <li>
