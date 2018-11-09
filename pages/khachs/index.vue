@@ -21,16 +21,16 @@
                             <th>#</th>
                           </thead>
                           <tbody>
-                              <tr v-for="khach in khachs" :key="khach.id">
+                              <tr v-for="khach in listKhach" :key="khach.id">
                                 <td>{{ khach.id }}</td>
                                 <td>{{ khach.ho_ten }}</td>
                                 <td>{{ khach.cmnd }}</td>
                                 <td>{{ khach.dien_thoai }}</td>
                                 <td>{{ khach.dia_chi }}</td>
-                                <td></td>
-                                <td></td>
-                                <td>Edit</td>
-                                <td>Delete</td>
+                                <td>{{ khach.ngay_vao }}</td>
+                                <td>{{ khach.ngay_ra }}</td>
+                                <td><button @click="showUser()" class="btn btn-primary">Edit</button></td>                                
+                                <td><button @click="deleteUser()" class="btn btn-danger">Delete</button></td>                                
                               </tr>
                           </tbody>
                       </table>
@@ -43,12 +43,19 @@
 </template>
 
 <script>
-import axios from "axios";
+import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
-  async asyncData({ params }) {
-    let { data } = await axios.get("http://localhost/ktx/api/v1/khachluutrus");
-    return { khachs: data.data };
+  created() {
+    this.getKhachs();
+  },
+
+  computed: {
+    ...mapState("khachs", ["listKhach"])
+  },
+
+  methods: {
+    ...mapActions("khachs", ["getKhachs"]),
   }
 };
 </script>

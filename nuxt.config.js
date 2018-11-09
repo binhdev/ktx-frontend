@@ -1,5 +1,7 @@
 const pkg = require('./package')
-
+env: {
+  baseUrl: process.env.BASE_URL || 'http://localhost/ktx/api/v1'
+}
 module.exports = {
   mode: 'universal',
 
