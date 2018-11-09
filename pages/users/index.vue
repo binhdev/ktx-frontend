@@ -17,12 +17,12 @@
                             <th>#</th>
                           </thead>
                           <tbody>
-                              <tr v-for="user in list" :key="user.id">
+                              <tr v-for="user in users" :key="user.id">
                                 <td>{{ user.id }}</td>
                                 <td>{{ user.name }}</td>
                                 <td>{{ user.email }}</td>
-                                <td>Edit</td>
-                                <td>Delete</td>
+                                <td><button @click="showUser(user)" class="btn btn-primary">Edit</button></td>                                
+                                <td><button @click="deleteUser(user.id)" class="btn btn-danger">Delete</button></td>   
                               </tr>
                           </tbody>
                       </table>
@@ -35,19 +35,24 @@
 
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
-  async fetch({ store }) {
-    await store.dispatch("users/get");
+  created() {
+    this.getUsers();
   },
 
   computed: {
-    ...mapState({
-      list: state => {
-        return state.users.list;
-      }
-    })
+    ...mapState("users", ["users"])
+  },
+
+  methods: {
+    ...mapActions("users", [
+      "getUsers"
+    ]),
+    showUser: user => {
+      this.$router.push({ name: 'users.edit', params: { id: user.id, object: user}})
+    }
   }
 };
 </script>

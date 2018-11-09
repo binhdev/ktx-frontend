@@ -9,40 +9,40 @@
 
             <ul class="nav">
                 <li class="active">
-                    <a href="/">
+                    <nuxt-link to="/">
                         <i class="pe-7s-graph"></i>
-                        <p>Dashboard</p>
-                    </a>
+                        <span class="menu-title">Dashboard</span>
+                    </nuxt-link>
                 </li>
                 <li>
-                    <a href="quanly">
+                    <nuxt-link to="/users">
                         <i class="pe-7s-user"></i>
-                        <p>Quan ly</p>
-                    </a>
+                        <span class="menu-title">Quan ly</span>
+                    </nuxt-link>
                 </li>
                 <li>
-                    <a href="khach">
+                    <nuxt-link to="/khachs">
                         <i class="pe-7s-user"></i>
                         <p>Khach</p>
-                    </a>
+                    </nuxt-link>
                 </li>
                 <li>
-                    <a href="phong">
+                    <nuxt-link to="/phongs">
                         <i class="pe-7s-note2"></i>
                         <p>Phong</p>
-                    </a>
+                    </nuxt-link>
                 </li>
                 <li>
-                    <a href="typography">
+                    <nuxt-link to="/taisans">
                         <i class="pe-7s-news-paper"></i>
                         <p>Tai san</p>
-                    </a>
+                    </nuxt-link>
                 </li>
                 <li>
-                    <a href="icons.html">
+                    <nuxt-link to="/diennuocs">
                         <i class="pe-7s-science"></i>
                         <p>Dien nuoc</p>
-                    </a>
+                    </nuxt-link>
                 </li>
                 <li>
                     <a href="maps.html">
@@ -56,7 +56,7 @@
                         <p>Notifications</p>
                     </a>
                 </li>
-        <li class="active-pro">
+                <li class="active-pro">
                     <a href="upgrade.html">
                         <i class="pe-7s-rocket"></i>
                         <p>Upgrade to PRO</p>
