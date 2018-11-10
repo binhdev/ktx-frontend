@@ -19,10 +19,20 @@
                           <tbody>
                               <tr v-for="user in users" :key="user.id">
                                 <td>{{ user.id }}</td>
-                                <td>{{ user.name }}</td>
+                                <td>
+                                <nuxt-link :to="{path: 'users/' + user.id }">          
+                                      {{ user.name }}
+                                </nuxt-link>
+                                </td>
                                 <td>{{ user.email }}</td>
-                                <td><button @click="showUser(user)" class="btn btn-primary">Edit</button></td>                                
-                                <td><button @click="deleteUser(user.id)" class="btn btn-danger">Delete</button></td>   
+                                <td>
+                                  <nuxt-link :to="{path: 'users/' + user.id + '/edit'}">          
+                                      <b-button class="btn btn-primary">Edit</b-button>
+                                  </nuxt-link>
+                                </td>                                
+                                <td>
+                                  <b-button @click="showAlert()" class="btn btn-danger">Delete</b-button>
+                                </td>   
                               </tr>
                           </tbody>
                       </table>
@@ -35,7 +45,7 @@
 
 
 <script>
-import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
+import { mapState, mapActions, mapMutations, mapGetters } from "vuex"
 
 export default {
   created() {
@@ -50,8 +60,14 @@ export default {
     ...mapActions("users", [
       "getUsers"
     ]),
-    showUser: user => {
-      this.$router.push({ name: 'users.edit', params: { id: user.id, object: user}})
+    editUser: user => {
+      this.$router.push({ name: 'users/:id/edit', params: { id: user.id, object: user}})
+    },
+    showAlert(){
+      // Use sweetalert2
+      swal("Are you sure you want to do this?", {
+        buttons: ["Oh noez!", true],
+      });
     }
   }
 };

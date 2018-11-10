@@ -1,7 +1,5 @@
 const pkg = require('./package')
-env: {
-  baseUrl: process.env.BASE_URL || 'http://localhost/ktx/api/v1'
-}
+
 module.exports = {
   mode: 'universal',
 
@@ -45,12 +43,14 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['~/plugins/vue-swal', {css: true}],
 
   /*
    ** Nuxt.js modules
    */
-  modules: [],
+  modules: [
+    ['bootstrap-vue/nuxt', {css: false}]
+  ],
 
   axios: {
     baseURL: 'http://127.0.0.1/ktx/api'
@@ -60,6 +60,7 @@ module.exports = {
    ** Build configuration
    */
   build: {
+    vendor: ['vue-swal'],
     /*
      ** You can extend webpack config here
      */

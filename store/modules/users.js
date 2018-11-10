@@ -21,9 +21,7 @@ const mutations = {
 };
 
 const actions = {
-  getUsers({
-    commit
-  }) {
+  getUsers({commit}) {
     axios.get('http://localhost/ktx/api/v1/users')
       .then(r => {
         commit('setUsers', r.data.data)
