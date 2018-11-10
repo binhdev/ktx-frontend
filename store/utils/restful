@@ -1,0 +1,11 @@
+const restful = {
+    editPath: (name, id) => {
+        return "{0}/{1}/{2}".format(name, id, "edit")
+    },
+
+    deletePath: (name, id) => {
+        return "{0}/{1}".format(name, id)
+    }
+}
+
+export default restful
