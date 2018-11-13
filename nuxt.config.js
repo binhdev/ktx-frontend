@@ -1,4 +1,5 @@
 const pkg = require('./package')
+const i18n = require('./config/locales')
 
 module.exports = {
   mode: 'universal',
@@ -39,21 +40,60 @@ module.exports = {
    ** Global CSS
    */
   css: [],
-
-  /*
-   ** Plugins to load before mounting the App
-   */
-  plugins: ['~/plugins/vue-swal', {css: true}],
-
   /*
    ** Nuxt.js modules
    */
   modules: [
-    ['bootstrap-vue/nuxt', {css: false}]
+    ['bootstrap-vue/nuxt', {css: false}],
+    ['nuxt-i18n', i18n],
+    ['@nuxtjs/axios'],
+    ['@nuxtjs/auth']
   ],
 
+  /*
+   ** Plugins to load before mounting the App
+   */
+  plugins: [
+    '~/plugins/vue-swal'
+  ],
+
+  /**
+   * Nuxt.js router
+   */
+  router: {
+    middleware: ['auth']
+  },
+  /**
+   * Nuxt.js auth
+   */
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/auth/login', method: 'post', propertyName: 'token' },
+          logout: { url: '/auth/logout', method: 'post' },
+          user: { url: '/auth/user', method: 'get', propertyName: 'data' }
+        }
+      }
+    }
+  },
+
   axios: {
-    baseURL: 'http://127.0.0.1/ktx/api'
+    baseURL: process.env.API_URL || 'http://localhost/ktx/api/v1',
+    redirect: {
+      callback: '/users'
+    },
+    requestInterceptor: (config, {store}) => {
+      config.headers.common['Authorization'] = 'Bearer ' + store.state.token
+      return config
+    },
+    
+    proxyHeaders: false,
+    credentials: false,
+    redirectError: {
+      401: '/login',
+      404: '/notfound'
+    },
   },
 
   /*
@@ -65,7 +105,6 @@ module.exports = {
      ** You can extend webpack config here
      */
     extend(config, ctx) {
-
     }
   }
 }

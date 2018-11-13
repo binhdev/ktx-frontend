@@ -1,7 +1,5 @@
-import axios from 'axios'
-
 const state = {
-  users: [],
+  list: [],
   user: {}
 };
 
@@ -10,51 +8,61 @@ const getters = {
 };
 
 const mutations = {
-  setUsers: (state, users) => {
-    state.users = users
+  SET_USERS: (state, users) => {
+    state.list = users
   },
 
-  setCurrentUser: (state, user) => {
+  SET_USER: (state, user) => {
     state.user = user
   }
 
 };
 
 const actions = {
-  getUsers({commit}) {
-    axios.get('http://localhost/ktx/api/v1/users')
-      .then(r => {
-        commit('setUsers', r.data.data)
+  async me() {
+    await this.$auth.fetchUser()
+  },
+  login({commit, dispatch}, {email, password, remmberme}) {
+    return this.$auth.loginWith('local', {data: {email,password,remmberme}
+    })
+  },
+  async logout() {
+    await this.$auth.logout()
+  },
+  register({commit, dispatch}, form) {
+    this.$axios.post('users', form)
+  },
+  async get({commit, store}) {
+    await this.$axios.get('users')
+      .then(res => {
+        if(res.status === 200)
+          commit('SET_USERS', res.data.data)
       })
       .catch(err => {
         console.log(err)
       })
   },
-
-  getUser({
-    commit
-  }, id) {
-    axios.get('http://localhost/ktx/api/v1/users/${id}')
-      .then(r => {
-        commit('setCurrentUser', r.data.data)
-      })
-      .catch(err => {
-        console.log(err)
+  async show({commit}, params) {
+    await this.$axios.get('users/${params.id}')
+      .then((res) => {
+        if (res.status === 200) {
+          commit('SET_USER', res.data.data)
+        }
       })
   },
 
-  deleteUser({
-    commit
-  }, id) {
-    axios.delete('http://localhost/ktx/api/v1/users/${id}')
-      .then(r => {
-        this.getUsers()
-        console.log('Delete Success')
-      })
-      .catch(err => {
-        console.log(err)
-      })
+  create({commit}, params) {
+    return this.$axios.post('users', {user: params})
+  },
+
+  update({commit}, params) {
+    return this.$axios.put('users/' + params.id, {user: params})
+  },
+
+  delete({commit}, params) {
+    return this.$axios.delete('users/' + params.id)
   }
+
 };
 
 const users = {
