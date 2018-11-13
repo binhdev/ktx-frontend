@@ -51,8 +51,17 @@
 import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
-  created() {
-    this.getKhachs();
+  data() {
+    return {
+      currentPage: 1
+    }
+  },
+  async fetch({store}) {
+      await store.dispatch('khachs/getListKhachs')
+  },
+  mounted() {
+    this.getListKhachs();
+    console.log('mounted khachs size:' + this.listKhach.length)
   },
 
   computed: {
@@ -60,7 +69,7 @@ export default {
   },
 
   methods: {
-    ...mapActions("khachs", ["getKhachs"]),
+    ...mapActions("khachs", ["getListKhachs"]),
   }
 };
 </script>

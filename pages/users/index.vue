@@ -60,8 +60,12 @@ export default {
       currentPage: 1
     }
   },
+
+  mounted() {
+    this.getListUsers();
+  },
   async fetch({store}) {
-      await store.dispatch('users/get')
+      await store.dispatch('users/getListUsers')
   },
 
   computed: {
@@ -72,8 +76,7 @@ export default {
   },
 
   methods: {
-    ...mapActions("users", ["get", "removeUser"]),
-    
+    ...mapActions("users", ["getListUsers", "removeUser"]),
     destroy(user){
       // Use sweetalert2
       swal({
@@ -85,8 +88,8 @@ export default {
       })
       .then((willDelete) => {
         if (willDelete) {
-          this.$store.dispatch('users/delete', {id: user.id}).then(() => {
-            this.$store.dispatch('users/get')
+          this.$store.dispatch('users/delete', user).then(() => {
+            this.$store.dispatch('users/getListUsers')
             swal("Poof! Your imaginary file has been deleted!", {
               icon: "success",
             });

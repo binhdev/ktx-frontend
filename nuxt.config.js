@@ -83,13 +83,6 @@ module.exports = {
     redirect: {
       callback: '/users'
     },
-    requestInterceptor: (config, {store}) => {
-      config.headers.common['Authorization'] = 'Bearer ' + store.state.token
-      return config
-    },
-    
-    proxyHeaders: false,
-    credentials: false,
     redirectError: {
       401: '/login',
       404: '/notfound'

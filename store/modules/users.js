@@ -1,3 +1,4 @@
+import { userApi } from '@/api/user.api'
 const state = {
   list: [],
   user: {}
@@ -23,8 +24,7 @@ const actions = {
     await this.$auth.fetchUser()
   },
   login({commit, dispatch}, {email, password, remmberme}) {
-    return this.$auth.loginWith('local', {data: {email,password,remmberme}
-    })
+    return this.$auth.loginWith('local', {data: {email,password,remmberme}})
   },
   async logout() {
     await this.$auth.logout()
@@ -32,6 +32,7 @@ const actions = {
   register({commit, dispatch}, form) {
     this.$axios.post('users', form)
   },
+
   async get({commit, store}) {
     await this.$axios.get('users')
       .then(res => {
@@ -50,17 +51,32 @@ const actions = {
         }
       })
   },
+  async getListUsers({commit, store}) {
+    userApi.index(this).then(res => {
+      commit('SET_USERS', res.data.data)
+    })
+  },
+  async show({commit}, params) {
+    console.log('do')
+    userApi.show(this, params.id)
+      .then((res) => {
+        console.log(res)
+        // commit('SET_USER', res.data.data)
+      }).catch(err => {
+        console.log(err)
+      })
+  },
 
   create({commit}, params) {
-    return this.$axios.post('users', {user: params})
+    return userApi.store(this, {user: params})
   },
 
   update({commit}, params) {
-    return this.$axios.put('users/' + params.id, {user: params})
+    return userApi.update(this, params.id, {user: params})
   },
 
   delete({commit}, params) {
-    return this.$axios.delete('users/' + params.id)
+    return userApi.delete(this, params.id)
   }
 
 };
