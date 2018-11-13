@@ -68,9 +68,7 @@
                               </ul>
                         </li>
                         <li>
-                            <a href="#">
-                                <p>Log out</p>
-                            </a>
+                            <p @click="logout()">Logout</p>
                         </li>
             <li class="separator hidden-lg"></li>
                     </ul>
@@ -79,6 +77,8 @@
   </nav>
 </template>
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   data() {
       return {
@@ -87,6 +87,24 @@ export default {
     created() {
     },
     computed: {
+    },
+    methods: {
+        ...mapActions('users',['logout'])
     }
   }
 </script>
+<style scope>
+.navbar .navbar-nav > li > p {
+    padding: 10px 15px;
+    margin: 10px 3px;
+    position: relative;
+}
+.navbar-default .navbar-nav > li > p:not(.btn) {
+    color: #9A9A9A;
+    cursor: pointer;
+}
+.navbar-default .navbar-nav > li > p:hover {
+    color: blueviolet;
+    cursor: pointer;
+}
+</style>

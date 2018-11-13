@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 const state = {
   listKhach: []
 };
@@ -18,7 +16,7 @@ const actions = {
   getKhachs({
     commit
   }) {
-    axios.get('http://localhost/ktx/api/v1/khachluutrus')
+    this.$axios.get('khachluutrus')
       .then(r => {
         console.log(r.data.data)
         commit('GET_KHACHS', r.data.data)
