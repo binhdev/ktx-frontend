@@ -1,14 +1,22 @@
 <template>
-    <user-form></user-form>
+    <user-form :user="user"></user-form>
 </template>
 
 <script>
 import UserForm from '@/components/UserForm.vue'
 
 export default {
+    name: 'createUser',
     components: { UserForm },
-    fetch({store}) {
-        store.commit('users/SET_USER', {})
+    
+    data() {
+        return {
+            user: {
+                name: '',
+                email: '',
+                role: ''
+            }
+        }
     }
 }
 </script>

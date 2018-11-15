@@ -4,8 +4,15 @@
           <div class="col-md-12">
               <div class="card">
                   <div class="header">
-                      <h4 class="title">Khach</h4>
-                      <p class="category">Khach luu tru</p>
+                      <div style="float: left;">
+                        <h4 class="title">Khách lưu trú</h4>
+                        <p class="category">Danh sách khách lưu trú</p>
+                    </div>
+                    <div style="float: right">
+                      <nuxt-link :to="{path: 'khachs/new'}">          
+                          <b-button class="btn btn-primary">New</b-button>
+                      </nuxt-link>
+                    </div>
                   </div>
                   <div class="content table-responsive table-full-width">
                       <table class="table table-hover table-striped">

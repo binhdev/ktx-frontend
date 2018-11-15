@@ -9,13 +9,14 @@
         </b-col>
       </b-row>
       <b-form-group id="inputGroupName"
-          label="Your name:"
+          label="User name:"
           label-for="nameInput"
           description="We'll never share your email with anyone else.">
         <b-form-input id="nameInput"
             type="text"
             name="user[name]"
             :value="user.name"
+            v-model="form.name"
             required
             placeholder="Enter name">
         </b-form-input>
@@ -27,19 +28,30 @@
         <b-form-input id="emailInput"
             type="email"
             name="user[email]"
+            v-model="form.email"
             :value="user.email"
             required
             placeholder="Enter email">
         </b-form-input>
       </b-form-group>
-      <b-form-group id="inputGroupName"
-          label="Your password:"
-          label-for="inputName">
-        <b-form-input id="inputName"
+      <b-form-group id="inputGroupPassword"
+          label="User password:"
+          label-for="inputPassword">
+        <b-form-input id="inputPassword"
             type="password"            
             name="user[password]"
-            :value="user.password"
             v-model="form.password"
+            required
+            placeholder="Enter name">
+        </b-form-input>
+      </b-form-group>
+      <b-form-group id="inputGroupRePassword"
+          label="User Repassword:"
+          label-for="inputRePassword">
+        <b-form-input id="inputRePassword"
+            type="password"            
+            name="user[password_confirmation]"
+            v-model="form.password_confirmation"
             required
             placeholder="Enter name">
         </b-form-input>
@@ -72,7 +84,8 @@ export default {
       form: {
         email: '',
         name: '',
-        role: null,
+        password: '',
+        role: '',
         checked: []
       },
       roles: [
@@ -90,11 +103,11 @@ export default {
       evt.preventDefault();
       // alert(JSON.stringify(this.form));
       let vm = this;
-      let action = 'users/' + (this.isUpdate() ? 'updated' : 'create')
-      this.$store.dispatch(action, this.user)
-        .then((res) => {
-          vm.$router.push('users')
-        })
+      if(this.isUpdate()){
+        this.update(this.form)
+      }else{
+        this.create(this.form)
+      }
     },
     onReset (evt) {
       evt.preventDefault();
