@@ -21,7 +21,7 @@
                             <th>#</th>
                           </thead>
                           <tbody>
-                              <tr v-for="khach in listKhach" :key="khach.id">
+                              <tr v-for="khach in listKhachs" :key="khach.id">
                                 <td>{{ khach.id }}</td>
                                 <td>{{ khach.ho_ten }}</td>
                                 <td>{{ khach.cmnd }}</td>
@@ -29,8 +29,12 @@
                                 <td>{{ khach.dia_chi }}</td>
                                 <td>{{ khach.ngay_vao }}</td>
                                 <td>{{ khach.ngay_ra }}</td>
-                                <td><button @click="showUser()" class="btn btn-primary">Edit</button></td>                                
-                                <td><button @click="deleteUser()" class="btn btn-danger">Delete</button></td>                                
+                                <td>
+                                  <nuxt-link :to="{path: `khachs/${khach.id}/edit`}">          
+                                      <b-button class="btn btn-primary">Edit</b-button>
+                                  </nuxt-link>
+                                </td>                                
+                                <td><button @click="destroy(khach)" class="btn btn-danger">Delete</button></td>                                
                               </tr>
                           </tbody>
                       </table>
@@ -48,28 +52,51 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
+import { api } from '@/api/index'
+import { KHACHS_ENDPOINT } from '@/utils/constants'
 
 export default {
   data() {
     return {
+      listKhachs: [],
       currentPage: 1
     }
   },
-  async fetch({store}) {
-      await store.dispatch('khachs/getListKhachs')
-  },
   mounted() {
     this.getListKhachs();
-    console.log('mounted khachs size:' + this.listKhach.length)
-  },
-
-  computed: {
-    ...mapState("khachs", ["listKhach"])
   },
 
   methods: {
-    ...mapActions("khachs", ["getListKhachs"]),
+    getListKhachs() {
+      api.index(this, KHACHS_ENDPOINT).then(res => {
+        this.listKhachs = res.data.data
+      }).catch(err => {
+        console.log('getListKhachs', err)
+      })
+    },
+
+    destroy(khach){
+      // Use sweetalert2
+      swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this imaginary file!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          api.delete(this, KHACHS_ENDPOINT, khach.id).then(res => {
+            swal("Poof! Your imaginary file has been deleted!", {
+              icon: "success",
+            });
+            this.getListKhachs()
+          })  
+        } else {
+          swal("Opp !!!");
+        }
+      });
+    }
   }
 };
 </script>

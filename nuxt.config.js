@@ -45,9 +45,7 @@ module.exports = {
    */
   modules: [
     ['bootstrap-vue/nuxt', {css: false}],
-    ['nuxt-i18n', i18n],
-    ['@nuxtjs/axios'],
-    ['@nuxtjs/auth']
+    ['nuxt-i18n', i18n]
   ],
 
   /*
@@ -56,38 +54,6 @@ module.exports = {
   plugins: [
     '~/plugins/vue-swal'
   ],
-
-  /**
-   * Nuxt.js router
-   */
-  router: {
-    middleware: ['auth']
-  },
-  /**
-   * Nuxt.js auth
-   */
-  auth: {
-    strategies: {
-      local: {
-        endpoints: {
-          login: { url: '/auth/login', method: 'post', propertyName: 'token' },
-          logout: { url: '/auth/logout', method: 'post' },
-          user: { url: '/auth/user', method: 'get', propertyName: 'data' }
-        }
-      }
-    }
-  },
-
-  axios: {
-    baseURL: process.env.API_URL || 'http://localhost/ktx/api/v1',
-    redirect: {
-      callback: '/users'
-    },
-    redirectError: {
-      401: '/login',
-      404: '/notfound'
-    },
-  },
 
   /*
    ** Build configuration

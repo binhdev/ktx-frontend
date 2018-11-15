@@ -18,7 +18,7 @@
                             <th>#</th>
                           </thead>
                           <tbody>
-                              <tr v-for="user in list" :key="user.id">
+                              <tr v-for="user in listUsers" :key="user.id">
                                 <td>{{ user.id }}</td>
                                 <td>
                                 <nuxt-link :to="{path: 'users/' + user.id }">          
@@ -28,7 +28,7 @@
                                 <td>{{ user.email }}</td>
                                 <td>Admin</td>
                                 <td>
-                                  <nuxt-link :to="{path: 'users/' + user.id + '/edit'}">          
+                                  <nuxt-link :to="{path: `users/${user.id}/edit`}">          
                                       <b-button class="btn btn-primary">Edit</b-button>
                                   </nuxt-link>
                                 </td>                                
@@ -52,11 +52,14 @@
 
 
 <script>
-import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
+import { api } from '@/api/index'
+import { USERS_ENDPOINT } from '@/utils/constants'
 
 export default {
+
   data() {
     return {
+      listUsers: [],
       currentPage: 1
     }
   },
@@ -64,19 +67,16 @@ export default {
   mounted() {
     this.getListUsers();
   },
-  async fetch({store}) {
-      await store.dispatch('users/getListUsers')
-  },
-
-  computed: {
-    ...mapState('users', {
-      list: state => state.list,
-      user: state => state.user
-    })
-  },
 
   methods: {
-    ...mapActions("users", ["getListUsers", "removeUser"]),
+    getListUsers() {
+      api.index(this, USERS_ENDPOINT).then(res => {
+        this.listUsers = res.data.data
+      }).catch(err => {
+        console.log('getListUser', err)
+      })
+    },
+
     destroy(user){
       // Use sweetalert2
       swal({
@@ -88,12 +88,12 @@ export default {
       })
       .then((willDelete) => {
         if (willDelete) {
-          this.$store.dispatch('users/delete', user).then(() => {
-            this.$store.dispatch('users/getListUsers')
+          api.delete(this,  USERS_ENDPOINT, user.id).then(res => {
             swal("Poof! Your imaginary file has been deleted!", {
               icon: "success",
             });
-          })          
+            this.getListUsers()
+          })  
         } else {
           swal("Opp !!!");
         }

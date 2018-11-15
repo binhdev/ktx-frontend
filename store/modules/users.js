@@ -1,4 +1,6 @@
-import { userApi } from '@/api/user.api'
+import { api } from '@/api/index'
+import * as constants from '@/utils/constants'
+
 const state = {
   list: [],
   user: {}
@@ -36,15 +38,14 @@ const actions = {
   async get({commit, store}) {
     await this.$axios.get('users')
       .then(res => {
-        if(res.status === 200)
-          commit('SET_USERS', res.data.data)
+        commit('SET_USERS', res.data.data)
       })
       .catch(err => {
         console.log(err)
       })
   },
   async show({commit}, params) {
-    await this.$axios.get('users/${params.id}')
+    await this.$axios.get(`users/${params.id}`)
       .then((res) => {
         if (res.status === 200) {
           commit('SET_USER', res.data.data)
@@ -52,31 +53,29 @@ const actions = {
       })
   },
   async getListUsers({commit, store}) {
-    userApi.index(this).then(res => {
+    api.index(this, constants.USERS_ENDPOINT).then(res => {
       commit('SET_USERS', res.data.data)
     })
   },
   async show({commit}, params) {
-    console.log('do')
-    userApi.show(this, params.id)
+    api.show(this, constants.USERS_ENDPOINT, params.id)
       .then((res) => {
-        console.log(res)
-        // commit('SET_USER', res.data.data)
+        commit('SET_USER', res.data.data)
       }).catch(err => {
         console.log(err)
       })
   },
 
   create({commit}, params) {
-    return userApi.store(this, {user: params})
+    return api.store(this, constants.USERS_ENDPOINT, {user: params})
   },
 
   update({commit}, params) {
-    return userApi.update(this, params.id, {user: params})
+    return api.update(this,  constants.USERS_ENDPOINT, params.id, {user: params})
   },
 
   delete({commit}, params) {
-    return userApi.delete(this, params.id)
+    return api.delete(this,  constants.USERS_ENDPOINT, params.id)
   }
 
 };
