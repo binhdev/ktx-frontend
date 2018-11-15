@@ -1,3 +1,5 @@
+import { khachApi } from '@/api/khach.api'
+
 const state = {
   listKhach: []
 };
@@ -7,23 +9,16 @@ const getters = {
 };
 
 const mutations = {
-  GET_KHACHS(state, khachs) {
+  SET_KHACHS(state, khachs) {
     state.listKhach = khachs
   }
 };
 
 const actions = {
-  getKhachs({
-    commit
-  }) {
-    this.$axios.get('khachluutrus')
-      .then(r => {
-        console.log(r.data.data)
-        commit('GET_KHACHS', r.data.data)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+  getListKhachs({commit}) {
+    khachApi.index(this).then(res => {
+      commit('SET_KHACHS', res.data.data)
+    })
   }
 };
 
