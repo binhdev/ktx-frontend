@@ -3,7 +3,7 @@
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
       <b-row align-h="end">
         <b-col class="text-left" style="margin-left: 15px">
-          <b-link :to="'/users'">
+          <b-link :to="'/khachs'">
             Back
           </b-link>
         </b-col>
@@ -14,8 +14,8 @@
           description="We'll never share your email with anyone else.">
         <b-form-input id="nameInput"
             type="text"
-            name="user[name]"
-            :value="user.name"
+            name="khach[name]"
+            :value="khach.name"
             required
             placeholder="Enter name">
         </b-form-input>
@@ -25,9 +25,9 @@
           label-for="emailInput"
           description="We'll never share your email with anyone else.">
         <b-form-input id="emailInput"
-            type="email"
-            name="user[email]"
-            :value="user.email"
+            type="text"
+            name="khach[cmd]"
+            :value="khach.cmnd"
             required
             placeholder="Enter email">
         </b-form-input>
@@ -36,10 +36,10 @@
           label="Your password:"
           label-for="inputName">
         <b-form-input id="inputName"
-            type="password"            
-            name="user[password]"
-            :value="user.password"
-            v-model="form.password"
+            type="text"            
+            name="khach[phone]"
+            :value="khach.phone"
+            v-model="form.phone"
             required
             placeholder="Enter name">
         </b-form-input>
@@ -49,8 +49,8 @@
           label-for="inputRole">
         <b-form-select id="inputRole"
             :options="roles"
-            name="user[role]"
-            :value="user.role"
+            name="khach[from_date]"
+            :value="khach.from_date"
             required
             v-model="form.role">
         </b-form-select>
@@ -65,20 +65,18 @@
 <script>
 
 export default {
-  name: "UserForm",
-  props: ['user'],
+  name: "KhachForm",
+  props: ['khach'],
   data() {
     return {
       form: {
-        email: '',
         name: '',
-        role: null,
-        checked: []
+        cmnd: '',
+        phone: '',
+        address: '',
+        from_date: '',
+        to_date: ''
       },
-      roles: [
-        { text: 'Select One', value: null },
-        'Admin', 'Member'
-      ],
       show: true
     }
   },
@@ -88,12 +86,11 @@ export default {
 
     onSubmit (evt) {
       evt.preventDefault();
-      // alert(JSON.stringify(this.form));
       let vm = this;
-      let action = 'users/' + (this.isUpdate() ? 'updated' : 'create')
+      let action = 'khachs/' + (this.isUpdate() ? 'updated' : 'create')
       this.$store.dispatch(action, this.user)
         .then((res) => {
-          vm.$router.push('users')
+          vm.$route.push('khachs')
         })
     },
     onReset (evt) {
@@ -104,8 +101,8 @@ export default {
       this.form.role = null;
       this.$nextTick(() => { this.show = true});
     },
-    update(user) {
-        api.update(this, USERS_ENDPOINT, this.$route.params.id, user)
+    update(khach) {
+        api.update(this, KHACHS_ENDPOINT, this.$route.params.id, khach)
         .then(res => {
 
         })

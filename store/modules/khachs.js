@@ -1,4 +1,4 @@
-import { khachApi } from '@/api/khach.api'
+import { api } from '@/api/index'
 
 const state = {
   listKhach: []

@@ -1,22 +1,33 @@
 <template>
-    <user-form></user-form>
+    <user-form v-bind:user="user"></user-form>
 </template>
 
 <script>
 import UserForm from '@/components/UserForm.vue'
-import { mapActions, mapState } from 'vuex';
+import { api } from '@/api/index'
+import { USERS_ENDPOINT } from '@/utils/constants'
 
 export default {
     name: 'editUser',
     components: { UserForm },
-    mounted() {
-        this.show(this.$route.params)
+    data() {
+        return {
+            user: {}
+        }
     },
-    computed: {
-        ...mapState('users', ['user'])
+    created() {
+        console.log('created')
+    },
+    mounted() {
+        this.getUser()
     },
     methods: {
-        ...mapActions('users',['show'])
+        getUser() {
+            api.show(this, USERS_ENDPOINT, this.$route.params.id)
+            .then(res => {
+                this.user = res.data.data
+            })
+        }
     }
 }
 </script>
