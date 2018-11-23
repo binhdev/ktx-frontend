@@ -9,7 +9,7 @@
                         <p class="category">Danh sách các nhân sự có quyền truy cập hệ thống quản lý</p>
                     </div>
                     <div style="float: right">
-                      <nuxt-link :to="{path: 'users/new'}">          
+                      <nuxt-link :to="{path: 'loaikhachs/new'}">          
                           <b-button class="btn btn-primary">New</b-button>
                       </nuxt-link>
                     </div>
@@ -18,29 +18,27 @@
                       <table class="table table-hover table-striped">
                           <thead>
                             <th>ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
+                            <th>Tên</th>
+                            <th>Ghi Chú</th>
                             <th>#</th>
                             <th>#</th>
                           </thead>
                           <tbody>
-                              <tr v-for="user in listUsers" :key="user.id">
-                                <td>{{ user.id }}</td>
+                              <tr v-for="loaikhach in listLoaiKhachs" :key="loaikhach.id">
+                                <td>{{ loaikhach.id }}</td>
                                 <td>
-                                <nuxt-link :to="{path: 'users/' + user.id }">          
-                                      {{ user.name }}
+                                <nuxt-link :to="{path: 'loaikhachs/' + loaikhach.id }">          
+                                      {{ loaikhach.loai_khach }}
                                 </nuxt-link>
                                 </td>
-                                <td>{{ user.email }}</td>
-                                <td>Admin</td>
+                                <td>{{ loaikhach.ghi_chu }}</td>                                
                                 <td>
-                                  <nuxt-link :to="{path: `users/${user.id}/edit`}">          
+                                  <nuxt-link :to="{path: `loaikhachs/${loaikhach.id}/edit`}">          
                                       <b-button class="btn btn-primary">Edit</b-button>
                                   </nuxt-link>
                                 </td>                                
                                 <td>
-                                  <b-button @click="destroy(user)" class="btn btn-danger">Delete</b-button>
+                                  <b-button @click="destroy(loaikhach)" class="btn btn-danger">Delete</b-button>
                                 </td>   
                               </tr>
                           </tbody>
@@ -60,31 +58,31 @@
 
 <script>
 import { api } from '@/api/index'
-import { USERS_ENDPOINT } from '@/utils/constants'
+import { LOAI_KHACHS_ENDPOINT } from '@/utils/constants'
 
 export default {
 
   data() {
     return {
-      listUsers: [],
+      listLoaiKhachs: [],
       currentPage: 1
     }
   },
 
   mounted() {
-    this.getListUsers();
+    this.getListLoaiKhachs();
   },
 
   methods: {
-    getListUsers() {
-      api.index(this, USERS_ENDPOINT).then(res => {
-        this.listUsers = res.data.data
+    getListLoaiKhachs() {
+      api.index(this, LOAI_KHACHS_ENDPOINT).then(res => {
+        this.listLoaiKhachs = res.data.data
       }).catch(err => {
-        console.log('getListUser', err)
+        console.log('listLoaiKhachs', err)
       })
     },
 
-    destroy(user){
+    destroy(loaikhach){
       // Use sweetalert2
       swal({
         title: "Are you sure?",
@@ -95,11 +93,11 @@ export default {
       })
       .then((willDelete) => {
         if (willDelete) {
-          api.delete(this,  USERS_ENDPOINT, user.id).then(res => {
+          api.delete(this,  LOAI_KHACHS_ENDPOINT, loaikhach.id).then(res => {
             swal("Poof! Your imaginary file has been deleted!", {
               icon: "success",
             });
-            this.getListUsers()
+            this.getListLoaiKhachs()
           })  
         } else {
           swal("Opp !!!");

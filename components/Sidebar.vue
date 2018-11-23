@@ -17,31 +17,37 @@
                 <li>
                     <nuxt-link to="/users">
                         <i class="pe-7s-user"></i>
-                        <span class="menu-title">Quan ly</span>
+                        <p>Nhân sự quản lý</p>
+                    </nuxt-link>
+                </li>
+                <li>
+                    <nuxt-link to="/loaikhachs">
+                        <i class="pe-7s-user"></i>
+                        <p>Phân loại khách</p>
                     </nuxt-link>
                 </li>
                 <li>
                     <nuxt-link to="/khachs">
                         <i class="pe-7s-user"></i>
-                        <p>Khach</p>
+                        <p>Quản lý khách</p>
                     </nuxt-link>
                 </li>
                 <li>
                     <nuxt-link to="/phongs">
                         <i class="pe-7s-note2"></i>
-                        <p>Phong</p>
+                        <p>Quản lý phòng</p>
                     </nuxt-link>
                 </li>
                 <li>
                     <nuxt-link to="/taisans">
                         <i class="pe-7s-news-paper"></i>
-                        <p>Tai san</p>
+                        <p>Quản lý tài sản</p>
                     </nuxt-link>
                 </li>
                 <li>
                     <nuxt-link to="/diennuocs">
                         <i class="pe-7s-science"></i>
-                        <p>Dien nuoc</p>
+                        <p>Quản lý điện nước</p>
                     </nuxt-link>
                 </li>
                 <li>
