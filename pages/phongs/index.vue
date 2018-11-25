@@ -4,14 +4,14 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">202 Awesome Stroke Icons</h4>
-                                <p class="category">Handcrafted by our friends from <a target="_blank" href="http://themes-pixeden.com/font-demos/7-stroke/index.html">Pixeden</a></p>
+                                <h4 class="title">Quản lý phòng ở</h4>
+                                <p class="category">Thông tin phòng ở</p>
                             </div>
                             <div class="content all-icons">
                                 <div class="row">
                                   <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
                                     <div class="font-icon-detail"><i class="pe-7s-album"></i>
-                                      <input type="text" value="pe-7s-album">
+                                      <input type="text" value="R1.201">
                                     </div>
 
                                   </div>

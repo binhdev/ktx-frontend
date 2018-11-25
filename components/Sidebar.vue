@@ -8,10 +8,10 @@
             </div>
 
             <ul class="nav">
-                <li class="active">
+                <li>
                     <nuxt-link to="/">
                         <i class="pe-7s-graph"></i>
-                        <span class="menu-title">Dashboard</span>
+                        <p>Dashboard</p>
                     </nuxt-link>
                 </li>
                 <li>
@@ -23,7 +23,7 @@
                 <li>
                     <nuxt-link to="/loaikhachs">
                         <i class="pe-7s-user"></i>
-                        <p>Phân loại khách</p>
+                        <p>Loại khách</p>
                     </nuxt-link>
                 </li>
                 <li>
@@ -86,3 +86,9 @@ export default {
   }
 }
 </script>
+
+<style>
+a.nuxt-link-exact-active {
+  background: #f66;
+}
+</style>
