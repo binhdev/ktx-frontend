@@ -14,9 +14,9 @@
           description="Định danh loại khách.">
         <b-form-input id="nameInput"
             type="text"
-            name="loaikhach[name]"
-            :value="loaikhach.name"
-            v-model="loaikhach.name"
+            name="loaikhach[loai_khach]"
+            :value="loaikhach.loai_khach"
+            v-model="form.loai_khach"
             required
             placeholder="Enter name">
         </b-form-input>
@@ -43,7 +43,7 @@
 
 <script>
 import { api } from '@/api/index'
-import { USERS_ENDPOINT } from '@/utils/constants'
+import { USERS_ENDPOINT, LOAI_KHACHS_ENDPOINT } from '@/utils/constants'
 
 export default {
   name: "LoaiKhachForm",
@@ -63,7 +63,6 @@ export default {
 
     onSubmit (evt) {
       evt.preventDefault();
-      // alert(JSON.stringify(this.form));
       let vm = this;
       if(this.isUpdate()){
         this.update(this.form)
@@ -75,11 +74,10 @@ export default {
       evt.preventDefault();
       /* Reset our form values */
       this.form.ghi_chu = '';
-      this.form.name = '';
+      this.form.loai_khach = '';
       this.$nextTick(() => { this.show = true});
     },
     create(loaikhach) {
-        console.log(user)
         api.store(this, LOAI_KHACHS_ENDPOINT, loaikhach)
         .then(res => {
           swal("Create Success!", {

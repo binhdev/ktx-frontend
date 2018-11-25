@@ -85,8 +85,7 @@ export default {
         email: '',
         name: '',
         password: '',
-        role: '',
-        checked: []
+        role: ''
       },
       roles: [
         { text: 'Select One', value: null },
@@ -117,10 +116,20 @@ export default {
       this.form.role = null;
       this.$nextTick(() => { this.show = true});
     },
+    create(user) {
+        api.store(this, USERS_ENDPOINT, user)
+        .then(res => {
+          swal("Update Success!", {
+              icon: "success",
+            });
+        })
+    },
     update(user) {
         api.update(this, USERS_ENDPOINT, this.$route.params.id, user)
         .then(res => {
-
+          swal("Update Success!", {
+              icon: "success",
+            });
         })
     }
   }
